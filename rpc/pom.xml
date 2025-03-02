@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>dtr</groupId>
-            <artifactId>dtr-blockchain-solana-sava-sdk</artifactId>
+            <artifactId>dtr-blockchain-solana-sava-core</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
