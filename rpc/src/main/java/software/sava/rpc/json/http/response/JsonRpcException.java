@@ -46,16 +46,21 @@ public final class JsonRpcException extends RuntimeException {
 
   @Deprecated
   public List<String> logs() {
-    return customError instanceof RpcCustomError.SendTransactionPreflightFailure(final TxSimulation simulation)
-        ? simulation.logs()
-        : NO_LOGS;
+    if (customError instanceof RpcCustomError.SendTransactionPreflightFailure error) {
+        return error.simulation().logs();
+    }
+    return NO_LOGS;
   }
 
   @Deprecated
   public long numSlotsBehind() {
-    return customError instanceof RpcCustomError.NodeUnhealthy(final OptionalLong numSlotsBehind)
-        ? numSlotsBehind.orElse(Integer.MIN_VALUE)
-        : Integer.MIN_VALUE;
+    // return customError instanceof RpcCustomError.NodeUnhealthy(final OptionalLong numSlotsBehind)
+    //     ? numSlotsBehind.orElse(Integer.MIN_VALUE)
+    //     : Integer.MIN_VALUE;
+    if (customError instanceof RpcCustomError.NodeUnhealthy error) {
+        return error.numSlotsBehind().orElse(Integer.MIN_VALUE);
+    }
+    return Integer.MIN_VALUE;
   }
 
   private static final class Parser implements FieldBufferPredicate {

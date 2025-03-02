@@ -114,7 +114,7 @@ public interface Transaction {
   }
 
   static Transaction createTx(final AccountMeta feePayer, final List<Instruction> instructions) {
-    final var accounts = HashMap.<PublicKey, AccountMeta>newHashMap(MAX_ACCOUNTS);
+    final var accounts = new HashMap<PublicKey, AccountMeta>(MAX_ACCOUNTS);
     final int serializedInstructionLength = mergeAccounts(feePayer, accounts, instructions);
     return createTx(instructions, serializedInstructionLength, sortLegacyAccounts(accounts));
   }
@@ -133,7 +133,7 @@ public interface Transaction {
     if (lookupTable == null) {
       return createTx(feePayer, instructions);
     }
-    final var accounts = HashMap.<PublicKey, AccountMeta>newHashMap(MAX_ACCOUNTS);
+    final var accounts = new HashMap<PublicKey, AccountMeta>(MAX_ACCOUNTS);
     final int serializedInstructionLength = mergeAccounts(feePayer, accounts, instructions);
     return createTx(instructions, serializedInstructionLength, sortV0Accounts(accounts), lookupTable);
   }
@@ -204,7 +204,7 @@ public interface Transaction {
                               final int serializedInstructionLength,
                               final AccountMeta[] sortedAccounts) {
     final int numAccounts = sortedAccounts.length;
-    final var accountIndexLookupTable = HashMap.<PublicKey, Integer>newHashMap(numAccounts);
+    final var accountIndexLookupTable = new HashMap<PublicKey, Integer>(numAccounts);
 
     int numRequiredSignatures = 0;
     int numReadonlySignedAccounts = 0;
@@ -288,7 +288,7 @@ public interface Transaction {
       return createTx(instructions, serializedInstructionLength, sortedAccounts);
     }
     final int numAccounts = sortedAccounts.length;
-    final var accountIndexLookupTable = HashMap.<PublicKey, Integer>newHashMap(numAccounts);
+    final var accountIndexLookupTable = new HashMap<PublicKey, Integer>(numAccounts);
 
     int numRequiredSignatures = 0;
     int numReadonlySignedAccounts = 0;
@@ -390,7 +390,7 @@ public interface Transaction {
   static Transaction createTx(final AccountMeta feePayer,
                               final List<Instruction> instructions,
                               final LookupTableAccountMeta[] tableAccountMetas) {
-    final var accounts = HashMap.<PublicKey, AccountMeta>newHashMap(MAX_ACCOUNTS);
+    final var accounts = new HashMap<PublicKey, AccountMeta>(MAX_ACCOUNTS);
     final int serializedInstructionLength = mergeAccounts(feePayer, accounts, instructions);
     return createTx(instructions, serializedInstructionLength, accounts, tableAccountMetas);
   }
@@ -429,7 +429,7 @@ public interface Transaction {
     }
 
     final int numAccounts = sortedAccounts.length;
-    final var accountIndexLookupTable = HashMap.<PublicKey, Integer>newHashMap(numAccounts);
+    final var accountIndexLookupTable = new HashMap<PublicKey, Integer>(numAccounts);
 
     int numRequiredSignatures = 0;
     int numReadonlySignedAccounts = 0;

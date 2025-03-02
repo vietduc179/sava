@@ -28,7 +28,7 @@ public record AccountInfo<T>(PublicKey pubKey,
                              int space,
                              T data) implements DecimalIntegerAmount {
 
-  public static BiFunction<PublicKey, byte[], byte[]> BYTES_IDENTITY = (_, data) -> data;
+  public static BiFunction<PublicKey, byte[], byte[]> BYTES_IDENTITY = (_tt, data) -> data;
 
   public static void cacheTables(final Collection<AccountInfo<AddressLookupTable>> tableAccounts,
                                  final Map<PublicKey, AddressLookupTable> cache) {

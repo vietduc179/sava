@@ -89,7 +89,7 @@ final class SolanaJsonRpcWebsocket implements WebSocket.Listener, SolanaRpcWebso
     this.programSubs = new ConcurrentSkipListMap<>();
     this.slotSub = new AtomicReference<>();
     this.subscriptionsBySubId = new ConcurrentSkipListMap<>();
-    this.exceptionSubs = HashSet.newHashSet(1);
+    this.exceptionSubs = new HashSet(1);
     this.buffer = new char[4_096];
     this.ji = JsonIterator.parse(new byte[0]);
     this.lock = new ReentrantLock();
@@ -225,7 +225,7 @@ final class SolanaJsonRpcWebsocket implements WebSocket.Listener, SolanaRpcWebso
     final long msgId = this.msgId.incrementAndGet();
     final var msg = createSubscriptionMsg(msgId, channel, params);
     final var sub = Subscription.createSubscription(commitment, channel, key, msgId, msg, onSub, consumer);
-    final var duplicate = subs.computeIfAbsent(sub.key(), _ -> new EnumMap<>(Commitment.class)).putIfAbsent(commitment, sub);
+    final var duplicate = subs.computeIfAbsent(sub.key(), _tt -> new EnumMap<>(Commitment.class)).putIfAbsent(commitment, sub);
     if (duplicate == null) {
       this.pendingSubscriptions.put(msgId, sub);
       lock.lock();
@@ -250,7 +250,7 @@ final class SolanaJsonRpcWebsocket implements WebSocket.Listener, SolanaRpcWebso
     final long msgId = this.msgId.incrementAndGet();
     final var msg = createSubscriptionMsg(msgId, channel, params);
     final var sub = Subscription.createAccountSubscription(commitment, channel, publicKey, msgId, msg, onSub, consumer);
-    final var duplicate = subs.computeIfAbsent(sub.key(), _ -> new EnumMap<>(Commitment.class)).putIfAbsent(commitment, sub);
+    final var duplicate = subs.computeIfAbsent(sub.key(), _tt -> new EnumMap<>(Commitment.class)).putIfAbsent(commitment, sub);
     if (duplicate == null) {
       this.pendingSubscriptions.put(msgId, sub);
       lock.lock();
@@ -302,7 +302,7 @@ final class SolanaJsonRpcWebsocket implements WebSocket.Listener, SolanaRpcWebso
       if (sub == null) {
         return removeDanglingSub(key, channel, commitment);
       } else {
-        subs.compute(key, (_, v) -> v == null || v.isEmpty() ? null : v);
+        subs.compute(key, (_tt, v) -> v == null || v.isEmpty() ? null : v);
         this.queueUnsubscribe(sub);
         return true;
       }
@@ -815,7 +815,7 @@ final class SolanaJsonRpcWebsocket implements WebSocket.Listener, SolanaRpcWebso
     if (millisSinceLastWrite > this.timings.pingDelay()) {
       final long previousWrite = this.lastWrite.getAndSet(now);
       final var pingMsg = String.valueOf(now);
-      webSocket.sendPing(ByteBuffer.wrap(pingMsg.getBytes(ISO_8859_1))).whenComplete(((_, throwable) -> {
+      webSocket.sendPing(ByteBuffer.wrap(pingMsg.getBytes(ISO_8859_1))).whenComplete(((_tt, throwable) -> {
         if (throwable != null) {
           this.lastWrite.compareAndSet(now, previousWrite);
           log.log(WARNING, String.format("Failed to ping %d to %s.", now, this.endpoint.getHost()), throwable);

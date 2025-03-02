@@ -24,7 +24,7 @@ public record TxStatus(Context context,
   }
 
   public static Map<String, TxStatus> parse(final List<String> txIds, final JsonIterator ji, final Context context) {
-    final var statuses = HashMap.<String, TxStatus>newHashMap(txIds.size());
+    final var statuses = new HashMap<String, TxStatus>(txIds.size());
     TxStatus nil = null;
     for (int i = 0; ji.readArray(); ++i) {
       final TxStatus sigStatus;

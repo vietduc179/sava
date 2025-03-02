@@ -27,7 +27,7 @@ record InstructionRecord(AccountMeta programId,
     if (numAccounts == 0) {
       return this;
     } else if (numAccounts == 1) {
-      return extraAccount(accounts.getFirst());
+      return extraAccount(accounts.get(0));
     }
     final var joined = new AccountMeta[this.accounts.size() + numAccounts];
     int i = 0;

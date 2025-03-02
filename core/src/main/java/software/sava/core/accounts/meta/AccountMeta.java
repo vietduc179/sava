@@ -51,7 +51,7 @@ public sealed interface AccountMeta permits AccountMetaReadOnly {
   }
 
   static Map<PublicKey, AccountMeta> createAccountsMap(final int numAccounts, final PublicKey feePayer) {
-    final var accounts = HashMap.<PublicKey, AccountMeta>newHashMap(numAccounts);
+    final var accounts = new HashMap<PublicKey, AccountMeta>(numAccounts);
     final var feePayerMeta = createFeePayer(feePayer);
     accounts.put(feePayer, feePayerMeta);
     return accounts;

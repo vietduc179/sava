@@ -39,7 +39,7 @@ public interface AddressLookupTable {
         : readPubKey(data, AUTHORITY_OFFSET);
     final int numAccounts = (data.length - LOOKUP_TABLE_META_SIZE) >> 5;
     final var accounts = new PublicKey[numAccounts];
-    final var distinctAccounts = HashMap.<PublicKey, Integer>newHashMap(numAccounts);
+    final var distinctAccounts = new HashMap<PublicKey, Integer>(numAccounts);
 
     for (int i = 0, o = LOOKUP_TABLE_META_SIZE; i < numAccounts; ++i, o += PUBLIC_KEY_LENGTH) {
       final var pubKey = readPubKey(data, o);

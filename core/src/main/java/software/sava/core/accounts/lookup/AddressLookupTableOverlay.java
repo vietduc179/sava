@@ -52,7 +52,7 @@ final class AddressLookupTableOverlay extends AddressLookupTableRoot {
   public AddressLookupTable withReverseLookup() {
     final int numAccounts = numAccounts();
     final var accounts = new PublicKey[numAccounts];
-    final var distinctAccounts = HashMap.<PublicKey, Integer>newHashMap(numAccounts);
+    final var distinctAccounts = new HashMap<PublicKey, Integer>(numAccounts);
     for (int i = 0, from = LOOKUP_TABLE_META_SIZE, to = data.length; from < to; ++i, from += PUBLIC_KEY_LENGTH) {
       final var pubKey = readPubKey(data, from);
       distinctAccounts.putIfAbsent(pubKey, i);
@@ -74,7 +74,7 @@ final class AddressLookupTableOverlay extends AddressLookupTableRoot {
   @Override
   public Set<PublicKey> uniqueAccounts() {
     final int numAccounts = numAccounts();
-    final var distinctAccounts = HashSet.<PublicKey>newHashSet(numAccounts);
+    final var distinctAccounts = new HashSet<PublicKey>(numAccounts);
     for (int i = 0, from = LOOKUP_TABLE_META_SIZE, to = data.length; from < to; ++i, from += PUBLIC_KEY_LENGTH) {
       distinctAccounts.add(readPubKey(data, from));
     }

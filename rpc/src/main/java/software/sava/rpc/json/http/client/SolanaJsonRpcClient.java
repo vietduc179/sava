@@ -1322,7 +1322,6 @@ final class SolanaJsonRpcClient extends JsonRpcHttpClient implements SolanaRpcCl
 
   private static void logSimulationResult(final TxSimulation simulationResult) {
     System.out.format("""
-            
             Simulation Result:
               program: %s
               CU consumed: %d
@@ -1347,8 +1346,8 @@ final class SolanaJsonRpcClient extends JsonRpcHttpClient implements SolanaRpcCl
   public static void main(String[] args) throws InterruptedException {
 //    final var rpcEndpoint = URI.create("https://mainnet.helius-rpc.com/?api-key=");
     final var rpcEndpoint = SolanaNetwork.MAIN_NET.getEndpoint();
-    try (final var httpClient = HttpClient.newHttpClient()) {
-      final var rpcClient = SolanaRpcClient.createClient(
+     final HttpClient httpClient = HttpClient.newHttpClient();
+      final SolanaRpcClient rpcClient = SolanaRpcClient.createClient(
           rpcEndpoint,
           httpClient,
           response -> {
@@ -1358,6 +1357,6 @@ final class SolanaJsonRpcClient extends JsonRpcHttpClient implements SolanaRpcCl
       );
 
 
-    }
+     
   }
 }

@@ -8,8 +8,8 @@ public interface Subsequence {
 
   static Subsequence create(final String subsequence,
                             final boolean caseSensitive,
-                            final boolean _1337Numbers,
-                            final boolean _1337Letters) {
+                            final boolean a_1337Numbers,
+                            final boolean a_1337Letters) {
     if (subsequence.isBlank()) {
       return null;
     }
@@ -17,7 +17,7 @@ public interface Subsequence {
     if (noneBase58Character >= 0) {
       throw new IllegalArgumentException(String.format("'%c' is not a base58 character.", subsequence.charAt(noneBase58Character)));
     }
-    final char[][] charOptions = SubsequenceRecord.generateCharOptions(subsequence, caseSensitive, _1337Numbers, _1337Letters);
+    final char[][] charOptions = SubsequenceRecord.generateCharOptions(subsequence, caseSensitive, a_1337Numbers, a_1337Letters);
     System.out.println("Character options:");
     for (int level = 0; level < 3; ++level) {
       System.out.print("  ");
@@ -39,8 +39,8 @@ public interface Subsequence {
         subsequence,
         subsequence.length(),
         caseSensitive,
-        _1337Numbers,
-        _1337Letters,
+        a_1337Numbers,
+        a_1337Letters,
         masks
     );
   }
